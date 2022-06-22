@@ -1,26 +1,20 @@
 import React, { useContext } from "react";
-import { TodoContext } from "../context/todoContext";
+import { TodoContext } from "../../context/TodoContext";
 
-const Card = ({ title, value, complete }) => {
+const Card = ({ title, value }) => {
    const { functions } = useContext(TodoContext);
    const { onDelete, onUpdate, onComplete } = functions;
 
    return (
       <div className="flex flex-col gap-5">
          <div>
-            <p
-               className={`text-lg leading-relaxed ${
-                  complete ? "line-through" : null
-               }`}
-            >
-               {title}
-            </p>
+            <p className="text-lg leading-relaxed">{title}</p>
          </div>
          <div className="flex items-center gap-3">
             <button
                value={value}
                onClick={onComplete}
-               className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-400 disabled:cursor-not-allowed"
+               className="flex h-9 w-9 items-center justify-center rounded-full bg-ghost-white text-palatinate-blue shadow-md transition-all duration-200 ease-linear hover:bg-palatinate-blue hover:text-white disabled:cursor-not-allowed"
             >
                <svg
                   className="h-5 w-5"
@@ -38,7 +32,7 @@ const Card = ({ title, value, complete }) => {
             <button
                value={value}
                onClick={onUpdate}
-               className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-400 disabled:cursor-not-allowed"
+               className="flex h-9 w-9 items-center justify-center rounded-full bg-ghost-white text-palatinate-blue shadow-md transition-all duration-200 ease-linear hover:bg-palatinate-blue hover:text-white disabled:cursor-not-allowed"
             >
                <svg
                   className="h-5 w-5"
@@ -50,7 +44,7 @@ const Card = ({ title, value, complete }) => {
                </svg>
             </button>
             <button
-               className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-400"
+               className="flex h-9 w-9 items-center justify-center rounded-full bg-ghost-white text-palatinate-blue shadow-md transition-all duration-200 ease-linear hover:bg-palatinate-blue hover:text-white"
                value={value}
                onClick={onDelete}
             >

@@ -1,17 +1,16 @@
 import React, { useContext } from "react";
-import { TodoContext } from "../context/todoContext";
-import Button from "./Button";
-import Input from "./Input";
+import { TodoContext } from "../../context/TodoContext";
+import { Input, Button } from "../index";
 
 const Modal = () => {
    const { input, functions } = useContext(TodoContext);
    const { onSubmit, closeModal } = functions;
 
    return (
-      <section className="absolute left-0 top-0 w-96 bg-Bright-Gray p-5">
+      <section className="absolute left-1/2 top-0 w-full -translate-x-1/2 rounded-3xl border bg-ghost-white px-5 pt-5 pb-6 shadow-md dark:bg-maastrich-blue">
          <div className="relative mb-5">
             <button
-               className="absolute -top-9 -right-8 flex h-9 w-9 items-center justify-center rounded-full bg-slate-400"
+               className="absolute -top-9 -right-8 flex h-9 w-9 items-center justify-center rounded-full border-[1px] border-palatinate-blue bg-ghost-white text-palatinate-blue transition-all duration-200 ease-linear hover:bg-palatinate-blue hover:text-white"
                onClick={closeModal}
             >
                <svg
@@ -29,7 +28,7 @@ const Modal = () => {
             </button>
             <form method="post" onSubmit={onSubmit} className="text-center">
                <Input />
-               <div className="absolute top-10 left-1/2 mt-5 flex -translate-x-1/2 justify-center">
+               <div className="absolute top-10 left-1/2 mt-5 flex translate-y-3 -translate-x-1/2 justify-center">
                   <Button
                      title="Submit"
                      status="primary"

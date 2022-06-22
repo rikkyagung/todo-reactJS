@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TodoContext } from "../context/todoContext";
+import { TodoContext } from "../../context/TodoContext";
 
 const Input = () => {
    const { input, functions } = useContext(TodoContext);
@@ -11,7 +11,7 @@ const Input = () => {
          value={input}
          onChange={onChange}
          placeholder="Add a new task"
-         className="w-full p-2"
+         className="w-full rounded-md p-3 outline-1 outline-palatinate-blue focus:outline-offset-0"
       />
    );
 };

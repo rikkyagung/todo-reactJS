@@ -6,7 +6,9 @@ const Button = ({ title, action, status, disabled }) => {
          onClick={action}
          disabled={disabled}
          className={`${
-            status === "primary" ? "bg-black text-white" : "bg-white"
+            status === "primary"
+               ? "border-[1px] border-palatinate-blue bg-palatinate-blue text-white shadow-lg shadow-palatinate-blue/50"
+               : "border-[1px] border-palatinate-blue bg-transparent text-palatinate-blue transition-all duration-200 ease-linear hover:bg-palatinate-blue hover:text-white"
          } flex w-auto items-center justify-center rounded-full px-5 py-[9px] disabled:cursor-not-allowed disabled:opacity-50`}
       >
          {title}

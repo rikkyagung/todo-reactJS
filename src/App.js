@@ -1,11 +1,14 @@
-import { TodoProvider } from "./context/todoContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import { TodoProvider } from "./context/TodoContext";
 import Todo from "./pages/Todo";
 
 function App() {
    return (
-      <TodoProvider>
-         <Todo />
-      </TodoProvider>
+      <ThemeProvider>
+         <TodoProvider>
+            <Todo />
+         </TodoProvider>
+      </ThemeProvider>
    );
 }
 export default App;

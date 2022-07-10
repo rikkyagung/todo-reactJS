@@ -1,19 +1,25 @@
 import React, { useContext } from "react";
-import { TodoContext } from "../../context/TodoContext";
+import { ContextReducer } from "../../context/ContextReducer";
+import { TOGGLE_TODO, DELETE_TODO } from "../../context/TodoTypes";
 
 const Card = ({ title, value }) => {
-   const { functions } = useContext(TodoContext);
-   const { onDelete, onUpdate, onComplete } = functions;
+   const { dispatch, functions } = useContext(ContextReducer);
+   const { onUpdate } = functions;
 
    return (
       <div className="flex flex-col gap-5">
          <div>
-            <p className="text-lg leading-relaxed">{title}</p>
+            <p className="text-[1.1rem] leading-relaxed">{title}</p>
          </div>
          <div className="flex items-center gap-3">
             <button
                value={value}
-               onClick={onComplete}
+               onClick={(e) =>
+                  dispatch({
+                     type: TOGGLE_TODO,
+                     index: parseInt(e.currentTarget.value),
+                  })
+               }
                className="flex h-9 w-9 items-center justify-center rounded-full bg-ghost-white text-palatinate-blue shadow-md transition-all duration-200 ease-linear hover:bg-palatinate-blue hover:text-white disabled:cursor-not-allowed"
             >
                <svg
@@ -46,7 +52,12 @@ const Card = ({ title, value }) => {
             <button
                className="flex h-9 w-9 items-center justify-center rounded-full bg-ghost-white text-palatinate-blue shadow-md transition-all duration-200 ease-linear hover:bg-palatinate-blue hover:text-white"
                value={value}
-               onClick={onDelete}
+               onClick={(e) =>
+                  dispatch({
+                     type: DELETE_TODO,
+                     index: parseInt(e.currentTarget.value),
+                  })
+               }
             >
                <svg
                   className="h-5 w-5"

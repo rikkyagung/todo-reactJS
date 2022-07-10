@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { TodoContext } from "../../context/TodoContext";
+import { ContextReducer } from "../../context/ContextReducer";
 import { Input, Button } from "../index";
 
 const Modal = () => {
-   const { input, functions } = useContext(TodoContext);
-   const { onSubmit, closeModal } = functions;
+   const { inputTodo, functions } = useContext(ContextReducer);
+   const { onChange, onSubmit, closeModal } = functions;
 
    return (
       <section className="absolute left-1/2 top-0 w-full -translate-x-1/2 rounded-3xl border bg-ghost-white px-5 pt-5 pb-6 shadow-md dark:bg-maastrich-blue">
@@ -27,12 +27,17 @@ const Modal = () => {
                </svg>
             </button>
             <form method="post" onSubmit={onSubmit} className="text-center">
-               <Input />
+               <Input
+                  value={inputTodo}
+                  onChange={onChange}
+                  placeholder={"Add a new task"}
+                  icon={false}
+               />
                <div className="absolute top-10 left-1/2 mt-5 flex translate-y-3 -translate-x-1/2 justify-center">
                   <Button
                      title="Submit"
                      status="primary"
-                     disabled={input === "" ? true : false}
+                     disabled={inputTodo === "" ? true : false}
                   />
                </div>
             </form>

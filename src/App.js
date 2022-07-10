@@ -1,13 +1,13 @@
 import { ThemeProvider } from "./context/ThemeContext";
-import { TodoProvider } from "./context/TodoContext";
-import Todo from "./pages/Todo";
+import TodoReducer from "./pages/TodoReducer";
+import { ContextReducerProvider } from "./context/ContextReducer";
 
 function App() {
    return (
       <ThemeProvider>
-         <TodoProvider>
-            <Todo />
-         </TodoProvider>
+         <ContextReducerProvider>
+            <TodoReducer />
+         </ContextReducerProvider>
       </ThemeProvider>
    );
 }

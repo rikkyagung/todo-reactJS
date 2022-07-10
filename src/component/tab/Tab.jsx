@@ -1,9 +1,9 @@
 import React from "react";
 import { useContext } from "react";
-import { TodoContext } from "../../context/TodoContext";
+import { ContextReducer } from "../../context/ContextReducer";
 
 const Tab = ({ title, id, action }) => {
-   const { activeTab } = useContext(TodoContext);
+   const { activeTab } = useContext(ContextReducer);
 
    return (
       <li
@@ -11,7 +11,7 @@ const Tab = ({ title, id, action }) => {
          className={`${
             activeTab === id
                ? "font-bold text-palatinate-blue before:absolute before:left-[42%] before:-bottom-4 before:block before:h-[7px] before:w-[7px] before:rounded-full before:bg-palatinate-blue"
-               : "dark:text-ghost-white opacity-75"
+               : "opacity-75 dark:text-ghost-white"
          } relative cursor-pointer`}
          onClick={action}
       >

@@ -1,41 +1,73 @@
-import React, { createContext, useReducer, useState } from "react";
-import { ADD_TODO, DELETE_TODO, TOGGLE_TODO, CLEAR_ALL } from "./TodoTypes";
+import React, {
+   createContext,
+   useEffect,
+   useReducer,
+   useRef,
+   useState,
+} from "react";
+import {
+   ADD_TODO,
+   DELETE_TODO,
+   TOGGLE_TODO,
+   CLEAR_ALL,
+   REVERSE_DATA,
+} from "../data/TodoTypes";
 
 export const ContextReducer = createContext();
 
 export const ContextReducerProvider = (props) => {
    const [inputTodo, setInputTodo] = useState("");
    const [todoIndex, setTodoIndex] = useState(null);
-   const [todoItem, setTodoItem] = useState([]);
-   const [modal, setModal] = useState(false);
+   const [isModal, setIsModal] = useState(false);
    const [activeTab, setActiveTab] = useState("all");
    const [search, setSearch] = useState("");
+   const [sort, setSort] = useState(false);
+   const id = useRef(0);
 
    const todoReducer = (state, action) => {
       switch (action.type) {
          case ADD_TODO:
             if (action.index === null) {
-               return [...state, { name: action.name, completed: false }];
+               return [
+                  ...state,
+                  {
+                     id: action.id,
+                     name: action.name,
+                     date: "",
+                     completed: false,
+                  },
+               ];
             } else {
-               return state.map((todo, idx) => {
-                  if (idx === action.index) {
-                     return { ...todo, name: action.name };
+               return state.map((todo) => {
+                  if (todo.id === action.index) {
+                     return {
+                        ...todo,
+                        name: action.name,
+                        date:
+                           new Date().toLocaleDateString() +
+                           " " +
+                           new Date().toLocaleTimeString("en-GB", {
+                              hour: "numeric",
+                              minute: "numeric",
+                           }),
+                     };
                   }
                   return todo;
                });
             }
          case DELETE_TODO:
-            let target = state[action.index];
-            return state.filter((event) => event !== target);
+            return state.filter((todo) => todo.id !== action.index);
          case TOGGLE_TODO:
-            return state.map((todo, index) => {
-               if (index === action.index) {
+            return state.map((todo) => {
+               if (todo.id === action.index) {
                   return { ...todo, completed: !todo.completed };
                }
                return todo;
             });
          case CLEAR_ALL:
             return (state = []);
+         case REVERSE_DATA:
+            return [...state].reverse();
          default:
             return state;
       }
@@ -47,25 +79,38 @@ export const ContextReducerProvider = (props) => {
     * untuk return value berisi 2, yang pertama ada state yang mengambil nilai dari initial value
     * value ke 2, berisi function dispatch, yang kita panggil untuk mengupdate state
     */
-   const [state, dispatch] = useReducer(todoReducer, todoItem);
+   const [state, dispatch] = useReducer(todoReducer, []);
+
+   useEffect(() => {
+      id.current = id.current + 1;
+   }, [state]);
 
    const onChange = (e) => {
       const target = e.target.value;
       setInputTodo(target);
    };
 
-   const onSubmit = (event) => {
-      event.preventDefault();
-      dispatch({ type: ADD_TODO, name: inputTodo, index: todoIndex });
+   const onSubmit = (e) => {
+      e.preventDefault();
+      dispatch({
+         type: ADD_TODO,
+         id: id.current,
+         name: inputTodo,
+         index: todoIndex,
+      });
       setInputTodo("");
       setTodoIndex(null);
    };
 
    const onUpdate = (e) => {
-      openModal();
+      showModal();
       const target = parseInt(e.currentTarget.value);
-      const todoTarget = state[target].name;
-      setInputTodo(todoTarget);
+      state.filter((todo) => {
+         if (todo.id === target) {
+            setInputTodo(todo.name);
+         }
+         return todo;
+      });
       setTodoIndex(target);
    };
 
@@ -78,12 +123,17 @@ export const ContextReducerProvider = (props) => {
       setSearch(e.target.value);
    };
 
-   const openModal = () => {
-      setModal(true);
+   const sorting = () => {
+      dispatch({ type: REVERSE_DATA });
+      setSort((prev) => !prev);
    };
 
-   const closeModal = () => {
-      setModal(false);
+   const showModal = () => {
+      if (isModal === false) {
+         setInputTodo("");
+         setTodoIndex(null);
+      }
+      setIsModal((prev) => !prev);
    };
 
    const functions = {
@@ -91,28 +141,23 @@ export const ContextReducerProvider = (props) => {
       onSubmit,
       onUpdate,
       onUpdateTab,
-      openModal,
-      closeModal,
-      searchItem
+      showModal,
+      searchItem,
+      sorting,
    };
 
    return (
       <ContextReducer.Provider
          value={{
             inputTodo,
-            setInputTodo,
             todoIndex,
-            setTodoIndex,
-            todoItem,
-            setTodoItem,
             activeTab,
-            setActiveTab,
-            modal,
-            setModal,
+            isModal,
             state,
             dispatch,
             search,
             setSearch,
+            sort,
             functions,
          }}
       >

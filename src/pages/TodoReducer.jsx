@@ -2,20 +2,28 @@ import React, { useContext } from "react";
 import { Button, Card, Input, Modal, Tab, TabContent } from "../component";
 import { ThemeContext } from "../context/ThemeContext";
 import { ContextReducer } from "../context/ContextReducer";
-import { CLEAR_ALL } from "../context/TodoTypes";
+import { CLEAR_ALL } from "../data/TodoTypes";
 
 export default function Reducer() {
    const { themeValue, setTheme } = useContext(ThemeContext);
-   const { state, dispatch, modal, activeTab, search, setSearch, functions } =
-      useContext(ContextReducer);
-   const { onUpdateTab, searchItem, openModal } = functions;
+   const {
+      state,
+      dispatch,
+      isModal,
+      activeTab,
+      search,
+      setSearch,
+      sort,
+      functions,
+   } = useContext(ContextReducer);
+   const { onUpdateTab, searchItem, showModal, sorting } = functions;
 
    const completedTodo = state.filter((todo) => todo.completed);
    const uncompleteTodo = state.filter((todo) => !todo.completed);
 
    return (
-      <main className="flex h-screen items-center justify-center overflow-hidden px-5 font-roboto">
-         <div className="relative rounded-3xl bg-ghost-white pt-5 pb-8 shadow-lg transition-all duration-200 ease-linear dark:bg-maastrich-blue">
+      <main className="flex items-center justify-center px-6 pt-10 pb-12 font-roboto">
+         <div className="relative w-96 rounded-3xl bg-ghost-white pt-5 pb-8 shadow-lg transition-all duration-200 ease-linear dark:bg-maastrich-blue">
             <button
                className="absolute right-6 flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-md transition-all duration-200 ease-linear"
                onClick={() => {
@@ -135,13 +143,38 @@ export default function Reducer() {
                      disabled={state.length === 0 ? true : false}
                   />
                </div>
-               {modal ? <Modal /> : null}
+               {isModal ? <Modal /> : null}
             </section>
 
-            <section className="scrolling-body mt-5 max-h-[12rem] overflow-y-scroll px-6">
+            <div className="mb-3 flex justify-end px-6">
+               {state.length === 0 ? null : sort ? (
+                  <svg
+                     className="h-6 w-6 cursor-pointer dark:text-white"
+                     onClick={sorting}
+                     fill="currentColor"
+                     viewBox="0 0 20 20"
+                     xmlns="http://www.w3.org/2000/svg"
+                  >
+                     <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z" />
+                  </svg>
+               ) : (
+                  <svg
+                     className="h-6 w-6 cursor-pointer dark:text-white"
+                     onClick={sorting}
+                     fill="currentColor"
+                     viewBox="0 0 20 20"
+                     xmlns="http://www.w3.org/2000/svg"
+                  >
+                     <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h7a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z" />
+                  </svg>
+               )}
+            </div>
+
+            <section className="scrolling-body mt-5 max-h-[13rem] overflow-y-scroll px-6">
                <ul className="flex flex-col">
                   <TabContent id="all" activeTab={activeTab}>
-                     {state
+                     {[...state]
+                        .reverse()
                         .filter((data) =>
                            Object.values(data)
                               .join(" ")
@@ -156,7 +189,11 @@ export default function Reducer() {
                                     todo.completed ? "bg-turquoise" : "bg-white"
                                  }`}
                               >
-                                 <Card title={todo.name} value={index} />
+                                 <Card
+                                    title={todo.name}
+                                    value={todo.id}
+                                    info={todo.date}
+                                 />
                               </li>
                            );
                         })}
@@ -177,7 +214,11 @@ export default function Reducer() {
                                     todo.completed ? "bg-turquoise" : "bg-white"
                                  }`}
                               >
-                                 <Card title={todo.name} value={index} />
+                                 <Card
+                                    title={todo.name}
+                                    value={todo.id}
+                                    info={todo.date}
+                                 />
                               </li>
                            );
                         })}
@@ -198,7 +239,11 @@ export default function Reducer() {
                                     todo.completed ? "bg-turquoise" : "bg-white"
                                  }`}
                               >
-                                 <Card title={todo.name} value={index} />
+                                 <Card
+                                    title={todo.name}
+                                    value={todo.id}
+                                    info={todo.date}
+                                 />
                               </li>
                            );
                         })}
@@ -207,7 +252,12 @@ export default function Reducer() {
             </section>
 
             <div className="absolute left-1/2 flex -translate-x-1/2 translate-y-3 justify-center">
-               <Button title="+ New Task" action={openModal} status="primary" />
+               <Button
+                  title="+ New Task"
+                  action={showModal}
+                  status="primary"
+                  disabled={isModal ? true : false}
+               />
             </div>
          </div>
       </main>

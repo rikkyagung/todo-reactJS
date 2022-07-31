@@ -4,14 +4,14 @@ import { Input, Button } from "../index";
 
 const Modal = () => {
    const { inputTodo, functions } = useContext(ContextReducer);
-   const { onChange, onSubmit, closeModal } = functions;
+   const { onChange, onSubmit, showModal } = functions;
 
    return (
       <section className="absolute left-1/2 top-0 w-full -translate-x-1/2 rounded-3xl border bg-ghost-white px-5 pt-5 pb-6 shadow-md dark:bg-maastrich-blue">
          <div className="relative mb-5">
             <button
                className="absolute -top-9 -right-8 flex h-9 w-9 items-center justify-center rounded-full border-[1px] border-palatinate-blue bg-ghost-white text-palatinate-blue transition-all duration-200 ease-linear hover:bg-palatinate-blue hover:text-white"
-               onClick={closeModal}
+               onClick={showModal}
             >
                <svg
                   className="h-5 w-5"

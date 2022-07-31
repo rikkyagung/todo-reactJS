@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 import { ContextReducer } from "../../context/ContextReducer";
-import { TOGGLE_TODO, DELETE_TODO } from "../../context/TodoTypes";
+import { TOGGLE_TODO, DELETE_TODO } from "../../data/TodoTypes";
 
-const Card = ({ title, value }) => {
+const Card = ({ title, value, info }) => {
    const { dispatch, functions } = useContext(ContextReducer);
    const { onUpdate } = functions;
 
    return (
       <div className="flex flex-col gap-5">
          <div>
-            <p className="text-[1.1rem] leading-relaxed">{title}</p>
+            <p className="text-base leading-relaxed">{title}</p>
+            {info === "" ? null : <p className="text-sm opacity-60 mt-5">Edited at {info}</p>}
          </div>
          <div className="flex items-center gap-3">
             <button

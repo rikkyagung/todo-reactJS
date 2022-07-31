@@ -8,8 +8,9 @@ const Input = ({ value, onChange, placeholder, icon }) => {
          value={value}
          onChange={onChange}
          placeholder={placeholder}
-         className={`${icon ? "pl-10":"pl-3"} w-full text-[.95rem] rounded-md py-3 outline-1 outline-palatinate-blue focus:outline-offset-0`}
-         // className="w-full text-[.95rem] rounded-md py-3 outline-1 outline-palatinate-blue focus:outline-offset-0"
+         className={`${
+            icon ? "pl-10" : "pl-3"
+         } w-full rounded-md py-3 text-[.95rem] outline-1 outline-palatinate-blue focus:outline-offset-0`}
       />
    );
 };

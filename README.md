@@ -1,10 +1,7 @@
 # Todo List App
-  <p>
-    Simple Todo App built with React JS, using useReducer and useContext.
-    <br />
-    <br />
-    <a href="https://rikkyagung.github.io/todo-reactJS/">View Demo</a>
-  </p>
+  <a href="https://rikkyagung.github.io/todo-reactJS/">
+    <p>View Demo</p>
+  </a>
 
 ## Table of Contents
 
@@ -18,7 +15,7 @@
 
 ![preview-image.](/src/assets/img/website-preview.png "Preview Image.")
 
-This application displays all the activities made. It also displays ongoing and completed activities. Activities in this application can also be updated and deleted as desired.
+This application shows every action taken. It also shows ongoing and completed activities. Activities in this application can also be updated and deleted as needed.
 
 ### Built With
 
@@ -34,22 +31,33 @@ This application displays all the activities made. It also displays ongoing and 
 
 ## Getting Started
 
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running, follow these simple example steps.
 
 ### Prerequisites
 
-1. Your computer has node js installed. You can download it from [node js officially website](https://nodejs.org/en/).
+1. Your computer has Node JS installed. You can download it from [Node JS Officially Website](https://nodejs.org/en/).
+2. Text editor (VSCode, Atom, Sublime Text, Notepad, etc).
 
 ### Installation
 
-1. Clone the repo 
+1. Clone the repo
 
-```
-git clone https://github.com/rikkyagung/todo-reactJS.git
-```
+   ```
+   git clone https://github.com/rikkyagung/todo-reactJS.git
+   ```
 
-2. Install NPM packages
+   -  If you're using git bash, go to the file's directory that you want to use, and then clone the repository.
 
-```
-npm install
-```
+   -  If you're using a text editor, such as VSCode. Launch the terminal and clone the repository.
+
+2. Install Packages
+
+   ```
+   npm install
+   ```
+
+   or
+
+   ```
+   yarn add
+   ```
